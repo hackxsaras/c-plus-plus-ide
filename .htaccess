@@ -1,0 +1,2 @@
+RewriteEngine On
+RewriteRule ^([A-Za-z0-9_]+)\/([A-Za-z0-9_]+)$ ?q=$1\/$2
