@@ -3,7 +3,7 @@
 	if(isset($_GET['q'])){
 		$currFilePath = 'contests/'.$_GET['q'];
 		//create that file
-		
+
 		if(!file_exists($currFilePath.'.cpp'))file_put_contents($currFilePath.'.cpp',"#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n   \n   return 0;\n}");
 		
 	}
@@ -22,20 +22,6 @@
 		<link href="/cpp/plugin/codemirror/lib/codemirror.css" rel="stylesheet">
 		<link href="/cpp/plugin/codemirror/theme/night.css" rel="stylesheet">
 		<link rel="stylesheet" href="/cpp/plugin/codemirror/addon/fold/foldgutter.css" />
-		<script src="/cpp/plugin/codemirror/lib/codemirror.js"></script>
-		<script src="/cpp/plugin/codemirror/mode/clike/clike.js"></script>
-		<script src="/cpp/plugin/codemirror/addon/edit/matchbrackets.js"></script>
-		<script src="/cpp/plugin/codemirror/addon/edit/closebrackets.js"></script>
-		<script src="/cpp/plugin/codemirror/mode/xml/xml.js"></script>
-		<script src="/cpp/plugin/codemirror/addon/selection/active-line.js"></script>
-		<script src="/cpp/plugin/codemirror/addon/fold/foldcode.js"></script>
-		<script src="/cpp/plugin/codemirror/addon/fold/foldgutter.js"></script>
-		<script src="/cpp/plugin/codemirror/addon/fold/brace-fold.js"></script>
-		<script src="/cpp/plugin/codemirror/addon/fold/xml-fold.js"></script>
-		<script src="/cpp/plugin/codemirror/addon/fold/indent-fold.js"></script>
-		<script src="/cpp/plugin/codemirror/addon/fold/markdown-fold.js"></script>
-		<script src="/cpp/plugin/codemirror/addon/fold/comment-fold.js"></script>
-		<script src="/cpp/js/jquery.js"></script>
 		<style>
 			body{
 				margin:0;
@@ -223,6 +209,23 @@
 				</tr>
 			</table>
 		</div>
+
+		<script src="/cpp/plugin/codemirror/lib/codemirror.js"></script>
+		<script src="/cpp/plugin/codemirror/mode/clike/clike.js"></script>
+		<script src="/cpp/plugin/codemirror/addon/edit/matchbrackets.js"></script>
+		<script src="/cpp/plugin/codemirror/addon/edit/closebrackets.js"></script>
+		<script src="/cpp/plugin/codemirror/mode/xml/xml.js"></script>
+		<script src="/cpp/plugin/codemirror/addon/selection/active-line.js"></script>
+		<script src="/cpp/plugin/codemirror/addon/fold/foldcode.js"></script>
+		<script src="/cpp/plugin/codemirror/addon/fold/foldgutter.js"></script>
+		<script src="/cpp/plugin/codemirror/addon/fold/brace-fold.js"></script>
+		<script src="/cpp/plugin/codemirror/addon/fold/xml-fold.js"></script>
+		<script src="/cpp/plugin/codemirror/addon/fold/indent-fold.js"></script>
+		<script src="/cpp/plugin/codemirror/addon/fold/markdown-fold.js"></script>
+		<script src="/cpp/plugin/codemirror/addon/fold/comment-fold.js"></script>
+		<script src="/cpp/js/jquery.js"></script>
+
+		
 		<script>
 			<?php echo 'var path = \''.$currFilePath.'\';'; ?>
 			var editor;
