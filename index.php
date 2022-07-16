@@ -3,7 +3,8 @@
 	if(isset($_GET['q'])){
 		$currFilePath = 'contests/'.$_GET['q'];
 		//create that file
-
+		$contest_name = substr($_GET['q'], 0, strripos($_GET['q'], "/"));
+		if(!file_exists("contests/".$contest_name)) mkdir("contests/".$contest_name);
 		if(!file_exists($currFilePath.'.cpp'))file_put_contents($currFilePath.'.cpp',"#include <bits/stdc++.h>\nusing namespace std;\nint main(){\n   \n   return 0;\n}");
 		
 	}
@@ -17,160 +18,13 @@
 		return $ret;
 	}
 ?>
+<!doctype html>
 <html>
 	<head>
-		<link href="/cpp/plugin/codemirror/lib/codemirror.css" rel="stylesheet">
-		<link href="/cpp/plugin/codemirror/theme/night.css" rel="stylesheet">
-		<link rel="stylesheet" href="/cpp/plugin/codemirror/addon/fold/foldgutter.css" />
-		<style>
-			body{
-				margin:0;
-			}
-			#hdr{
-				height:5vh;
-				background:rgba(255,0,0,0.1);
-				z-index:1000;
-				color:#fff;
-				font-size:15px;
-				line-height:5vh;
-				position:fixed;
-				top:0;
-				left:0;
-				width:100vw;
-				font-family:Open Sans;
-				padding-left:10px;
-				display:flex;
-			}
-			#fn{
-				color:#0f0;
-			}
-			#log{
-				position:fixed;
-				opacity:0.9;
-				background:#05f;
-				box-shadow:0px -10px 20px #000;
-				bottom:0;
-				left:0;
-				width:100vw;
-				z-index:100000;
-				display:none;
-				font-family:Lucida Console;
-			}
-			#head{
-				color:#fff;
-				background:rgba(0,0,0,.1);
-				font-size:20px;
-				box-sizing:border-box;
-				padding:20px;
-				border-bottom:1px solid rgba(255,255,255,.3);
-			}
-			#text{
-				color:#fff;
-				background:rgba(0,0,0,0.3);
-				font-size:15px;
-				box-sizing:border-box;
-				padding:20px;
-				max-height:35vh;
-				overflow:auto;
-				max-width:100vw;
-			}
-			.close{
-				position:absolute;
-				top:10px;
-				right:20px;
-				font-weight:600;
-				color:#fff;
-				font-size:20px;
-				cursor:pointer;
-			}
-			#success{
-				display:flex;
-			}
-			#ip,#op{
-				flex:1;
-				border-right:1px solid rgba(0,0,0,.3);
-				margin-right:20px;
-				max-width:50vw;
-				max-height:27vh;
-				overflow:auto;
-				white-space: pre-wrap;       /* Since CSS 2.1 */
-				white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-				white-space: -pre-wrap;      /* Opera 4-6 */
-				white-space: -o-pre-wrap;    /* Opera 7 */
-				word-wrap: break-word;       /* Internet Explorer 5.5+ */
-			}
-			#ip::before, #op::before{
-				font-family:Cambria;
-				display:block;	
-				font-weight:600;
-			}
-			#ip::before{
-				content:'INPUT';
-			}
-			#op::before{
-				content:'OUTPUT';
-			}
-			#settings{
-				height:100vh;
-				overflow:auto;
-				width:30vw;
-				opacity:0.8;
-				position:fixed;
-				overflow:auto;
-				right:-30vw;
-				top:0;
-				background:rgba(0,0,0,0.5);
-				border-left:1px solid #fff;
-				z-index:1000;
-				box-sizing:border-box;
-				padding:10px;
-				transition:all .1s linear;
-				display:flex;
-				flex-direction:column;
-			}
-			#custom_input{
-				border:none;
-				width:100%;
-				height:200px;
-				background:transparent;
-				color:#fff;
-				font-family:Open Sans;
-				font-weight:600;
-				resize:none;
-				border-bottom:1px solid rgba(255,255,255,.1);
-				flex:1;
-			}
-			#toggci{
-				color:#0f0;
-				font-family:Lucida Console;
-				cursor:pointer;
-			}
-			#status{
-				flex:1;
-			}
-			#toolbox{
-				padding-right:30px;
-				font-size:30px;
-			}
-			#details{
-				color:#fff;
-				width:100%;
-				font-size:15px;
-				font-family:Open Sans;
-			}
-			caption{
-				margin:10px;
-			}
-			td{
-				text-align:center;
-				padding:10px;
-			}
-			#err{
-				color:#777;
-				font-size:11px;
-				padding-left:20px;
-			}
-		</style>
+		<link href="/c-plus-plus-ide/plugin/codemirror/lib/codemirror.css" rel="stylesheet">
+		<link href="/c-plus-plus-ide/plugin/codemirror/theme/night.css" rel="stylesheet">
+		<link rel="stylesheet" href="/c-plus-plus-ide/plugin/codemirror/addon/fold/foldgutter.css" />
+		<link rel="stylesheet" href="/c-plus-plus-ide/css/style.css" />
 	</head>
 	<body>
 		<div id="hdr">
@@ -210,20 +64,20 @@
 			</table>
 		</div>
 
-		<script src="/cpp/plugin/codemirror/lib/codemirror.js"></script>
-		<script src="/cpp/plugin/codemirror/mode/clike/clike.js"></script>
-		<script src="/cpp/plugin/codemirror/addon/edit/matchbrackets.js"></script>
-		<script src="/cpp/plugin/codemirror/addon/edit/closebrackets.js"></script>
-		<script src="/cpp/plugin/codemirror/mode/xml/xml.js"></script>
-		<script src="/cpp/plugin/codemirror/addon/selection/active-line.js"></script>
-		<script src="/cpp/plugin/codemirror/addon/fold/foldcode.js"></script>
-		<script src="/cpp/plugin/codemirror/addon/fold/foldgutter.js"></script>
-		<script src="/cpp/plugin/codemirror/addon/fold/brace-fold.js"></script>
-		<script src="/cpp/plugin/codemirror/addon/fold/xml-fold.js"></script>
-		<script src="/cpp/plugin/codemirror/addon/fold/indent-fold.js"></script>
-		<script src="/cpp/plugin/codemirror/addon/fold/markdown-fold.js"></script>
-		<script src="/cpp/plugin/codemirror/addon/fold/comment-fold.js"></script>
-		<script src="/cpp/js/jquery.js"></script>
+		<script src="/c-plus-plus-ide/plugin/codemirror/lib/codemirror.js"></script>
+		<script src="/c-plus-plus-ide/plugin/codemirror/mode/clike/clike.js"></script>
+		<script src="/c-plus-plus-ide/plugin/codemirror/addon/edit/matchbrackets.js"></script>
+		<script src="/c-plus-plus-ide/plugin/codemirror/addon/edit/closebrackets.js"></script>
+		<script src="/c-plus-plus-ide/plugin/codemirror/mode/xml/xml.js"></script>
+		<script src="/c-plus-plus-ide/plugin/codemirror/addon/selection/active-line.js"></script>
+		<script src="/c-plus-plus-ide/plugin/codemirror/addon/fold/foldcode.js"></script>
+		<script src="/c-plus-plus-ide/plugin/codemirror/addon/fold/foldgutter.js"></script>
+		<script src="/c-plus-plus-ide/plugin/codemirror/addon/fold/brace-fold.js"></script>
+		<script src="/c-plus-plus-ide/plugin/codemirror/addon/fold/xml-fold.js"></script>
+		<script src="/c-plus-plus-ide/plugin/codemirror/addon/fold/indent-fold.js"></script>
+		<script src="/c-plus-plus-ide/plugin/codemirror/addon/fold/markdown-fold.js"></script>
+		<script src="/c-plus-plus-ide/plugin/codemirror/addon/fold/comment-fold.js"></script>
+		<script src="/c-plus-plus-ide/js/jquery.js"></script>
 
 		
 		<script>
@@ -246,6 +100,7 @@
 					localStorage.setItem(path+'_sst' , this.value);
 				}
 				document.onkeydown = function(e){
+					console.log(e.keyCode);
 					if(e.keyCode==120)compile();
 				};
 				editor = CodeMirror.fromTextArea(document.getElementById('fullarea'),
@@ -268,6 +123,9 @@
 				editor.on("change",function(){
 					save();
 				});
+				var elem = editor.getWrapperElement();
+				elem.id = "fullarea-cm-editor";
+				console.log(editor);
 			};
 			function compile(){
 				save();
@@ -275,7 +133,7 @@
 				$('#text').html('');
 				$('#log').css({'display':'block'});
 				$.ajax({
-					url: "/cpp/compile.php",
+					url: "/c-plus-plus-ide/compile.php",
 					type: "post",
 					data: {path:path},
 					success: function (response) {
@@ -294,7 +152,7 @@
 			}
 			function save(){
 				$.ajax({
-					url: "/cpp/save.php",
+					url: "/c-plus-plus-ide/save.php",
 					type: "post",
 					data: {path:path, code:editor.getValue()},
 					success: function (response) {
@@ -310,7 +168,7 @@
 				$('#text').html('');
 				$('#log').css({'display':'block'});
 				$.ajax({
-					url: "/cpp/run.php",
+					url: "/c-plus-plus-ide/run.php",
 					type: "post",
 					data: {path:path,input:input},
 					timeout:10000,
@@ -344,7 +202,3 @@
 		</script>
 	</body>
 </html>
-<!--
-RUNTIME ERRORS
-Compilation LOG
--->
