@@ -1,4 +1,5 @@
 <?php
+	$folder_root = substr($_SERVER['PHP_SELF'], 0, strripos($_SERVER['PHP_SELF'], "/")+1);
 	$currFilePath = 'contests/temp/'.get7();
 	if(isset($_GET['q'])){
 		$currFilePath = 'contests/'.$_GET['q'];
@@ -21,10 +22,10 @@
 <!doctype html>
 <html>
 	<head>
-		<link href="/c-plus-plus-ide/plugin/codemirror/lib/codemirror.css" rel="stylesheet">
-		<link href="/c-plus-plus-ide/plugin/codemirror/theme/night.css" rel="stylesheet">
-		<link rel="stylesheet" href="/c-plus-plus-ide/plugin/codemirror/addon/fold/foldgutter.css" />
-		<link rel="stylesheet" href="/c-plus-plus-ide/css/style.css" />
+		<link href="<?php echo $folder_root; ?>plugin/codemirror/lib/codemirror.css" rel="stylesheet">
+		<link href="<?php echo $folder_root; ?>plugin/codemirror/theme/night.css" rel="stylesheet">
+		<link rel="stylesheet" href="<?php echo $folder_root; ?>plugin/codemirror/addon/fold/foldgutter.css" />
+		<link rel="stylesheet" href="<?php echo $folder_root; ?>css/style.css" />
 	</head>
 	<body>
 		<div id="hdr">
@@ -33,7 +34,28 @@
 				<div id="toggci" onclick="openCI()">&ltlarr;</div>
 			</div>
 		</div>
-		<textarea id="fullarea"><?php echo file_get_contents($currFilePath.'.cpp');?></textarea>
+		<div id="solution-container">
+			<textarea id="fullarea"><?php echo file_get_contents($currFilePath.'.cpp');?></textarea>
+			<div id="settings">
+				<div class="close" onclick="closeCI()">&#10539;</div>
+				<textarea id="custom_input" oninput="updInput();" placeholder="Custom Input"></textarea>
+				<table id="details">
+					<caption>Solution Details</caption>
+					<tr>
+						<td>Problem Link</td>
+						<td><input id="link" value=""></td>
+					</tr>
+					<tr>
+						<td>Difficulty</td>
+						<td><input id="diff" value=""></td>
+					</tr>
+					<tr>
+						<td>Solution Status</td>
+						<td><input id="sst" value=""></td>
+					</tr>
+				</table>
+			</div>
+		</div>
 		<div id="log">
 			<div id="head">Successfully Executed</div> 
 			<div id="text">
@@ -44,40 +66,22 @@
 			</div>
 			<div class="close" onclick="closelog()">&#10539;</div>
 		</div>
-		<div id="settings">
-			<div class="close" onclick="closeCI()">&#10539;</div>
-			<textarea id="custom_input" oninput="updInput();" placeholder="Custom Input"></textarea>
-			<table id="details">
-				<caption>Solution Details</caption>
-				<tr>
-					<td>Problem Link</td>
-					<td><input id="link" value=""></td>
-				</tr>
-				<tr>
-					<td>Difficulty</td>
-					<td><input id="diff" value=""></td>
-				</tr>
-				<tr>
-					<td>Solution Status</td>
-					<td><input id="sst" value=""></td>
-				</tr>
-			</table>
-		</div>
+		
 
-		<script src="/c-plus-plus-ide/plugin/codemirror/lib/codemirror.js"></script>
-		<script src="/c-plus-plus-ide/plugin/codemirror/mode/clike/clike.js"></script>
-		<script src="/c-plus-plus-ide/plugin/codemirror/addon/edit/matchbrackets.js"></script>
-		<script src="/c-plus-plus-ide/plugin/codemirror/addon/edit/closebrackets.js"></script>
-		<script src="/c-plus-plus-ide/plugin/codemirror/mode/xml/xml.js"></script>
-		<script src="/c-plus-plus-ide/plugin/codemirror/addon/selection/active-line.js"></script>
-		<script src="/c-plus-plus-ide/plugin/codemirror/addon/fold/foldcode.js"></script>
-		<script src="/c-plus-plus-ide/plugin/codemirror/addon/fold/foldgutter.js"></script>
-		<script src="/c-plus-plus-ide/plugin/codemirror/addon/fold/brace-fold.js"></script>
-		<script src="/c-plus-plus-ide/plugin/codemirror/addon/fold/xml-fold.js"></script>
-		<script src="/c-plus-plus-ide/plugin/codemirror/addon/fold/indent-fold.js"></script>
-		<script src="/c-plus-plus-ide/plugin/codemirror/addon/fold/markdown-fold.js"></script>
-		<script src="/c-plus-plus-ide/plugin/codemirror/addon/fold/comment-fold.js"></script>
-		<script src="/c-plus-plus-ide/js/jquery.js"></script>
+		<script src="<?php echo $folder_root; ?>plugin/codemirror/lib/codemirror.js"></script>
+		<script src="<?php echo $folder_root; ?>plugin/codemirror/mode/clike/clike.js"></script>
+		<script src="<?php echo $folder_root; ?>plugin/codemirror/addon/edit/matchbrackets.js"></script>
+		<script src="<?php echo $folder_root; ?>plugin/codemirror/addon/edit/closebrackets.js"></script>
+		<script src="<?php echo $folder_root; ?>plugin/codemirror/mode/xml/xml.js"></script>
+		<script src="<?php echo $folder_root; ?>plugin/codemirror/addon/selection/active-line.js"></script>
+		<script src="<?php echo $folder_root; ?>plugin/codemirror/addon/fold/foldcode.js"></script>
+		<script src="<?php echo $folder_root; ?>plugin/codemirror/addon/fold/foldgutter.js"></script>
+		<script src="<?php echo $folder_root; ?>plugin/codemirror/addon/fold/brace-fold.js"></script>
+		<script src="<?php echo $folder_root; ?>plugin/codemirror/addon/fold/xml-fold.js"></script>
+		<script src="<?php echo $folder_root; ?>plugin/codemirror/addon/fold/indent-fold.js"></script>
+		<script src="<?php echo $folder_root; ?>plugin/codemirror/addon/fold/markdown-fold.js"></script>
+		<script src="<?php echo $folder_root; ?>plugin/codemirror/addon/fold/comment-fold.js"></script>
+		<script src="<?php echo $folder_root; ?>js/jquery.js"></script>
 
 		
 		<script>
@@ -133,7 +137,7 @@
 				$('#text').html('');
 				$('#log').css({'display':'block'});
 				$.ajax({
-					url: "/c-plus-plus-ide/compile.php",
+					url: "<?php echo $folder_root; ?>compile.php",
 					type: "post",
 					data: {path:path},
 					success: function (response) {
@@ -152,7 +156,7 @@
 			}
 			function save(){
 				$.ajax({
-					url: "/c-plus-plus-ide/save.php",
+					url: "<?php echo $folder_root; ?>save.php",
 					type: "post",
 					data: {path:path, code:editor.getValue()},
 					success: function (response) {
@@ -168,7 +172,7 @@
 				$('#text').html('');
 				$('#log').css({'display':'block'});
 				$.ajax({
-					url: "/c-plus-plus-ide/run.php",
+					url: "<?php echo $folder_root; ?>run.php",
 					type: "post",
 					data: {path:path,input:input},
 					timeout:10000,
@@ -189,11 +193,11 @@
 			}
 			function openCI(){
 				$('#toggci').css({'display':'none'});
-				$('#settings').css({'right':'0'});
+				$('#settings').css({'width':'30vw', 'padding':'10px'});
 			}
 			function closeCI(){
 				$('#toggci').css({'display':'block'});
-				$('#settings').css({'right':'-30vw'});
+				$('#settings').css({'width':'0', 'padding':'0'});
 			}
 			function updInput(){
 				input = document.getElementById('custom_input').value;

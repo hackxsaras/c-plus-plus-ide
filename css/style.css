@@ -5,19 +5,25 @@ body{
     flex-direction:column;
     height:100vh;
     background:#001;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 #hdr{
-    height:5vh;
-    background:rgba(255,0,0,0.1);
+    
+    background:rgba(255,255,255,0.05);
     color:#fff;
-    font-size:15px;
+    font-size:16px;
     line-height:5vh;
-    font-family:Open Sans;
-    padding-left:10px;
+    padding-left:20px;
+    display:flex;
+    box-shadow:0px 5px 3px #000;
+}
+#solution-container{
+    flex:1;
     display:flex;
 }
 #fullarea-cm-editor{
     flex:1;
+    height:auto;
     font-size:15px;
 }
 #fn{
@@ -90,33 +96,26 @@ body{
     content:'OUTPUT';
 }
 #settings{
-    height:100vh;
-    overflow:auto;
-    width:30vw;
-    opacity:0.8;
-    position:fixed;
-    overflow:auto;
-    right:-30vw;
-    top:0;
-    background:rgba(0,0,0,0.5);
-    border-left:1px solid #fff;
-    z-index:1000;
+    position:relative;
+    overflow:hidden;
+    width:0;
+    background:rgba(255,255,255,0.07);
+    box-shadow:-1px 3px 3px #000;
+    /* border-left:1px solid #fff; */
     box-sizing:border-box;
-    padding:10px;
     transition:all .1s linear;
     display:flex;
     flex-direction:column;
 }
 #custom_input{
-    border:none;
     width:100%;
-    height:200px;
     background:transparent;
     color:#fff;
     font-family:Open Sans;
     font-weight:600;
-    resize:none;
-    border-bottom:1px solid rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.1);
+    box-sizing:border-box;
+    padding:10px;
     flex:1;
 }
 #toggci{
@@ -146,6 +145,6 @@ td{
 }
 #err{
     color:#777;
-    font-size:11px;
+    font-size:12px;
     padding-left:20px;
 }
