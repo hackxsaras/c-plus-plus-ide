@@ -23,7 +23,7 @@
 <html>
 	<head>
 		<link href="<?php echo $folder_root; ?>plugin/codemirror/lib/codemirror.css" rel="stylesheet">
-		<link href="<?php echo $folder_root; ?>plugin/codemirror/theme/night.css" rel="stylesheet">
+		<link href="<?php echo $folder_root; ?>plugin/codemirror/theme/erlang-dark.css" rel="stylesheet">
 		<link rel="stylesheet" href="<?php echo $folder_root; ?>plugin/codemirror/addon/fold/foldgutter.css" />
 		<link rel="stylesheet" href="<?php echo $folder_root; ?>css/style.css" />
 	</head>
@@ -38,7 +38,7 @@
 			<textarea id="fullarea"><?php echo file_get_contents($currFilePath.'.cpp');?></textarea>
 			<div id="settings">
 				<div class="close" onclick="closeCI()">&#10539;</div>
-				<textarea id="custom_input" oninput="updInput();" placeholder="Custom Input"></textarea>
+				<div id="custom_input" contenteditable="" oninput="updInput();" data-ph="Custom Input"></div>
 				<table id="details">
 					<caption>Solution Details</caption>
 					<tr>
@@ -113,7 +113,7 @@
 					matchBrackets:true,
 					autoCloseBrackets:true,
 					mode: "text/x-c++src",
-					theme: "night",
+					theme: "erlang-dark",
 					styleActiveLine: true,
 					indentUnit:3,
 					extraKeys: {
@@ -160,10 +160,16 @@
 					type: "post",
 					data: {path:path, code:editor.getValue()},
 					success: function (response) {
+						$('#err').css({'color':'#777'});
 						$('#err').html(response);
+						setTimeout(function(){
+							if(response == $('#err').html())
+								$('#err').html("");
+						}, 1500, response);
 					},
 					error: function(jqXHR, textStatus, errorThrown) {
-					   $('#err').html(textStatus + errorThrown);
+						$('#err').css({'color':'#f00'});
+					    $('#err').html(textStatus + errorThrown);
 					}
 				});
 			}
@@ -200,7 +206,9 @@
 				$('#settings').css({'width':'0', 'padding':'0'});
 			}
 			function updInput(){
-				input = document.getElementById('custom_input').value;
+				var el = document.getElementById('custom_input');
+				input = el.value;
+				if(el.innerHTML.trim()==='<br>')el.innerHTML='';
 				localStorage.setItem(path+'_ci' , input);
 			}
 		</script>
