@@ -207,7 +207,8 @@
 			}
 			function updInput(){
 				var el = document.getElementById('custom_input');
-				input = el.value;
+				input = el.innerText.trim();
+				console.log(input);
 				if(el.innerHTML.trim()==='<br>')el.innerHTML='';
 				localStorage.setItem(path+'_ci' , input);
 			}
